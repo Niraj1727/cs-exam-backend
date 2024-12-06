@@ -23,6 +23,13 @@ app.options('*', (req, res) => {
 }); // Enable CORS for all preflight requests
 app.use(express.json());
 
+
+// Debug Logging Middleware
+app.use((req, res, next) => {
+  console.log(`[${req.method}] ${req.url}`);
+  console.log('Headers:', req.headers);
+  next();
+});
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB connected'))
