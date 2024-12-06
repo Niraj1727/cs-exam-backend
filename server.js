@@ -12,6 +12,9 @@ app.use(cors({
   credentials: true, // Allow credentials like cookies
   allowedHeaders: ['Content-Type', 'Authorization', 'x-requested-with'],
 }));
+
+// Handle Preflight Requests
+app.options('*', cors()); // Enable CORS for all preflight requests
 app.use(express.json());
 
 // Connect to MongoDB
