@@ -14,7 +14,13 @@ app.use(cors({
 }));
 
 // Handle Preflight Requests
-app.options('*', cors()); // Enable CORS for all preflight requests
+app.options('*', (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', 'https://acezy.site');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.sendStatus(200); // Preflight request successful
+}); // Enable CORS for all preflight requests
 app.use(express.json());
 
 // Connect to MongoDB
