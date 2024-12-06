@@ -7,7 +7,7 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:5000'], // Allow these origins
+  origin: ['http://localhost:3000', 'http://localhost:5000', 'https://acezy.site'], // Add your deployed frontend domain
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true, // Allow credentials like cookies
   allowedHeaders: ['Content-Type', 'Authorization', 'x-requested-with'],
