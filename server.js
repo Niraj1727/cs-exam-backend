@@ -5,8 +5,12 @@ require('dotenv').config();
 
 const app = express();
 
-// Middleware
-app.use(cors()); // Allow all origins since frontend and backend are on the same instance
+app.use(cors({
+  origin: 'https://acezy.site', // Allow requests from this frontend domain
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
 
 // Handle Preflight Requests (Optional, can be removed if CORS allows all)
 app.options('*', (req, res) => {
