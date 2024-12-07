@@ -6,23 +6,19 @@ require('dotenv').config();
 const app = express();
 
 // Middleware
-app.use(cors({
-  origin: ['http://localhost:3000', 'https://acezy.site','https://api.acezy.site','http://api.acezy.site'], // Allow local development and deployed frontend
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true, // Allow credentials like cookies
-  allowedHeaders: ['Content-Type', 'Authorization', 'x-requested-with'],
-}));
+app.use(cors()); // Allow all origins since frontend and backend are on the same instance
 
-// Handle Preflight Requests
+// Handle Preflight Requests (Optional, can be removed if CORS allows all)
 app.options('*', (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', 'https://acezy.site');
+  res.setHeader('Access-Control-Allow-Origin', '*'); // Allow all origins
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   res.setHeader('Access-Control-Allow-Credentials', 'true');
   res.sendStatus(200); // Preflight request successful
-}); // Enable CORS for all preflight requests
-app.use(express.json());
+});
 
+// JSON Middleware
+app.use(express.json());
 
 // Debug Logging Middleware
 app.use((req, res, next) => {
@@ -30,6 +26,7 @@ app.use((req, res, next) => {
   console.log('Headers:', req.headers);
   next();
 });
+
 // Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('MongoDB connected'))
